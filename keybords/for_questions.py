@@ -6,4 +6,7 @@ def get_cities_kb() -> ReplyKeyboardMarkup:
     kb.button(text='Москва')
     kb.button(text='Курск')
     kb.button(text='Череповец')
+    kb.button(text='Колпашево')
+    kb.button(text='Харовск')
+    kb.adjust(2)
     return kb.as_markup(resize_keyboard=True)
