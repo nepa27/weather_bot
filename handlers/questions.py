@@ -14,33 +14,34 @@ async def cmd_start(message: Message):
         'Для перезапуска бота нажмите /stop, затем /start',
         reply_markup=get_cities_kb()
     )
+@router.message(Command('stop'))
+async def stop_conversation(message: Message):
+    await message.answer('Бот остановлен. Нажмите /start, чтобы продолжить')
 
-@router.message(F.text.lower() == 'курск')
-async def answer_kursk(message: Message):
+@router.message(F.location)
+async def handle_location(message: Message):
+    latitude = message.location.latitude
+    longitude = message.location.longitude
     await message.answer(
-        get_weather(message.text),
+        await get_weather(latitude, longitude)
     )
 
-@router.message(F.text.lower() == 'москва')
-async def answer_moscow(message: Message):
+@router.message(F.text.lower() == 'курск' or
+                F.text.lower() == 'москва' or
+                F.text.lower() == 'череповец' or
+                F.text.lower() == 'харовск' or
+                F.text.lower() == 'колпашево')
+async def answer_city(message: Message):
     await message.answer(
-        get_weather(message.text),
+        await get_weather(message.text),
     )
 
-@router.message(F.text.lower() == 'череповец')
-async def answer_cherepovetc(message: Message):
-    await message.answer(
-        get_weather(message.text),
-    )
+@router.message(F.text.lower() == 'другой город')
+async def ask_for_city_name(message: Message):
+    await message.answer('Введите название города')
 
-@router.message(F.text.lower() == 'харовск')
-async def answer_cherepovetc(message: Message):
+@router.message()
+async def handle_custom_city(message: Message):
     await message.answer(
-        get_weather(message.text),
-    )
-
-@router.message(F.text.lower() == 'колпашево')
-async def answer_cherepovetc(message: Message):
-    await message.answer(
-        get_weather(message.text),
+        await get_weather(message.text),
     )
