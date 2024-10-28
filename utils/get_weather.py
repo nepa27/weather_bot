@@ -23,13 +23,13 @@ async def get_weather(*args):
             city = args[0]
             url = (f'https://api.openweathermap.org/data/2.5/weather?'
                    f'q={city}&units=metric&lang=ru&'
-                   f'appid=79d1ca96933b0328e1c7e3e7a26cb347')
+                   f'appid={APP_ID}')
         else:
             city = ''
             latitude, longitude = args
             url = (f'https://api.openweathermap.org/data/2.5/weather?'
                    f'lat={latitude}&lon={longitude}&units=metric&lang=ru&'
-                   f'appid=79d1ca96933b0328e1c7e3e7a26cb347')
+                   f'appid={APP_ID}')
         async with session.get(url=url) as response:
             weather_json = await response.json()
             try:

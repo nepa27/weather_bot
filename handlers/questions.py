@@ -19,29 +19,26 @@ async def stop_conversation(message: Message):
     await message.answer('Бот остановлен. Нажмите /start, чтобы продолжить')
 
 @router.message(F.location)
-async def handle_location(message: Message):
-    latitude = message.location.latitude
-    longitude = message.location.longitude
+async def get_location(message: Message):
     await message.answer(
-        await get_weather(latitude, longitude)
-    )
-
-@router.message(F.text.lower() == 'курск' or
-                F.text.lower() == 'москва' or
-                F.text.lower() == 'череповец' or
-                F.text.lower() == 'харовск' or
-                F.text.lower() == 'колпашево')
-async def answer_city(message: Message):
-    await message.answer(
-        await get_weather(message.text),
+        await get_weather(
+            message.location.latitude,
+            message.location.longitude
+        )
     )
 
 @router.message(F.text.lower() == 'другой город')
 async def ask_for_city_name(message: Message):
     await message.answer('Введите название города')
 
+@router.message(F.text)
+async def custom_city(message: Message):
+    response = await get_weather(message.text)
+    if response == 'Нет данных':
+        await message.answer('Это не название города!')
+    else:
+        await message.answer(response)
+
 @router.message()
-async def handle_custom_city(message: Message):
-    await message.answer(
-        await get_weather(message.text),
-    )
+async def handle_non_text_messages(message: Message):
+    await message.answer("Это не название города!")
