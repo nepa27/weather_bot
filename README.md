@@ -1,5 +1,7 @@
 # Телеграмм-бот для получения данных о погоде
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
+[![Asyncio](https://img.shields.io/badge/-Asyncio-464646?style=flat-square&logo=Python)](https://docs.python.org/3/library/asyncio.html)
+[![Aiogram](https://img.shields.io/badge/-Aiogram-464646?style=flat-square&logo=Python)](https://aiogram.readthedocs.io/)
 ## Описание
 Бот, который отправляет данные о погоде по запросу.
 ## Основные особенности
