@@ -21,16 +21,25 @@ async def get_weather(*args):
     async with ClientSession() as session:
         if len(args) == 1:
             city = args[0]
-            url = (f'https://api.openweathermap.org/data/2.5/weather?'
-                   f'q={city}&units=metric&lang=ru&'
-                   f'appid={APP_ID}')
+            params = {
+                'q':city,
+                'units':'metric',
+                'lang':'ru',
+                'appid':APP_ID
+            }
+            url = 'https://api.openweathermap.org/data/2.5/weather'
         else:
             city = ''
             latitude, longitude = args
-            url = (f'https://api.openweathermap.org/data/2.5/weather?'
-                   f'lat={latitude}&lon={longitude}&units=metric&lang=ru&'
-                   f'appid={APP_ID}')
-        async with session.get(url=url) as response:
+            params = {
+                'lat':latitude,
+                'lon':longitude,
+                'units':'metric',
+                'lang':'ru',
+                'appid':APP_ID
+            }
+            url = 'https://api.openweathermap.org/data/2.5/weather?'
+        async with session.get(url=url, params=params) as response:
             weather_json = await response.json()
             try:
                 temperature = round(weather_json['main']['temp'])
