@@ -16,7 +16,7 @@ CODE_TO_SMAIL = {
      'Snow': '\U0001F328',
      'Mist': '\U0001F32B',
      'Wind': '\U0001F32C',
-     'House': '\U0001F3E0',
+     'City': '\U0001F3D9',
      'Thermometer': '\U0001F321'
 }
 
@@ -50,17 +50,17 @@ async def get_weather(*args):
                 speed_wind = round(weather_json['wind']['speed'])
                 weather = weather_json['weather'][0]['description']
                 weather_description = weather_json['weather'][0]['main']
-                icon = ''
+                weather_icon = ''
 
                 if weather_description in CODE_TO_SMAIL:
-                    icon = CODE_TO_SMAIL[weather_description]
+                    weather_icon = CODE_TO_SMAIL[weather_description]
                 wind_icon = CODE_TO_SMAIL['Wind']
-                house_icon = CODE_TO_SMAIL['House']
+                city_icon = CODE_TO_SMAIL['City']
                 term_icon = CODE_TO_SMAIL['Thermometer']
-                geo = 'текущей геопозиции' if city == '' else f'городе {city} {house_icon}'
-                return (f'Температура {term_icon} в {geo}: {temperature} градусов\n'
-                        f'Ощущается как {temperature_feels_like} градусов\n'
-                        f'В {geo} сейчас {weather} {icon}\n'
-                        f'Скорость ветра: {speed_wind} м/с {wind_icon}')
+                geo = 'текущей геопозиции' if city == '' else f'городе {city} '
+                return (f'{city_icon}Температура в {geo}: {temperature} °С\n'
+                        f'{term_icon}Ощущается как {temperature_feels_like} °С\n'
+                        f'{weather_icon}В {geo} сейчас {weather}\n'
+                        f'{wind_icon}Скорость ветра: {speed_wind} м/с')
             except KeyError:
                 return 'Нет данных'
