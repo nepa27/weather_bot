@@ -43,15 +43,19 @@ async def get_weather(*args):
             weather_json = await response.json()
             try:
                 temperature = round(weather_json['main']['temp'])
+                temperature_feels_like = round(weather_json['main']['feels_like'])
+                speed_wind = round(weather_json['wind']['speed'])
                 weather = weather_json['weather'][0]['description']
                 weather_description = weather_json['weather'][0]['main']
                 icon = ''
+
                 if weather_description in CODE_TO_SMAIL:
                     icon = CODE_TO_SMAIL[weather_description]
 
                 geo = 'текущей геопозиции' if city == '' else f'городе {city}'
-                return (f'Температура в {geo} - {temperature} '
-                        f'градусов\n'
-                        f'В {geo} сейчас {weather} {icon}')
+                return (f'Температура в {geo}: {temperature} градусов\n'
+                        f'Ощущается как {temperature_feels_like} градусов\n'
+                        f'В {geo} сейчас {weather} {icon}\n'
+                        f'Скорость ветра: {speed_wind} м/с')
             except KeyError:
                 return 'Нет данных'
