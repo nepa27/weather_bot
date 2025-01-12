@@ -14,7 +14,10 @@ CODE_TO_SMAIL = {
      'Drizzle': '\U00002614',
      'Thunderstorm': '\U000026A1',
      'Snow': '\U0001F328',
-     'Mist': '\U0001F32B'
+     'Mist': '\U0001F32B',
+     'Wind': '\U0001F32C',
+     'House': '\U0001F3E0',
+     'Thermometer': '\U0001F321'
 }
 
 async def get_weather(*args):
@@ -51,11 +54,13 @@ async def get_weather(*args):
 
                 if weather_description in CODE_TO_SMAIL:
                     icon = CODE_TO_SMAIL[weather_description]
-
-                geo = 'текущей геопозиции' if city == '' else f'городе {city}'
-                return (f'Температура в {geo}: {temperature} градусов\n'
+                wind_icon = CODE_TO_SMAIL['Wind']
+                house_icon = CODE_TO_SMAIL['House']
+                term_icon = CODE_TO_SMAIL['Thermometer']
+                geo = 'текущей геопозиции' if city == '' else f'городе {city} {house_icon}'
+                return (f'Температура {term_icon} в {geo}: {temperature} градусов\n'
                         f'Ощущается как {temperature_feels_like} градусов\n'
                         f'В {geo} сейчас {weather} {icon}\n'
-                        f'Скорость ветра: {speed_wind} м/с')
+                        f'Скорость ветра: {speed_wind} м/с {wind_icon}')
             except KeyError:
                 return 'Нет данных'
